@@ -7,6 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class PayrollApplication {
 
     public static void main(String... args) {
-        //something goes here
+        SpringApplication.run(PayrollApplication.class, args);
     }
 }

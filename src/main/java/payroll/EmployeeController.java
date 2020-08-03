@@ -23,12 +23,12 @@ class EmployeeController {
 
     @GetMapping("/employees")
     List<Employee> all() {
-        //something goes here
+        return repository.findAll();
     }
 
     @PostMapping("/employees")
     Employee newEmployee(@RequestBody Employee newEmployee) {
-        // something goes here
+        return repository.save(newEmployee);
     }
 
     // Single item
@@ -43,11 +43,20 @@ class EmployeeController {
     @PutMapping("/employees/{id}")
     Employee replaceEmployee(@RequestBody Employee newEmployee, @PathVariable Long id) {
 
-        //something goes here
+        return repository.findById(id)
+                .map(employee -> {
+                    employee.setName(newEmployee.getName());
+                    employee.setRole(newEmployee.getRole());
+                    return repository.save(employee);
+                })
+                .orElseGet(() -> {
+                    newEmployee.setId(id);
+                    return repository.save(newEmployee);
+                });
     }
 
     @DeleteMapping("/employees/{id}")
     void deleteEmployee(@PathVariable Long id) {
-        //something goes here
+        repository.deleteById(id);
     }
 }
