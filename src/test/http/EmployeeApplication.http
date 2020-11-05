@@ -13,3 +13,20 @@ Content-Type: application/json
   "role":"Burglar"
 }
 
+### PUT: Add a new memeber to the company
+PUT http://localhost:8080/employees/1
+Content-Type: application/json
+
+{
+  "name":"Thorin Oakenshield",
+  "role":"King"
+}
+
+### DELETE: Add a new memeber to the company
+DELETE http://localhost:8080/employees/2
+Content-Type: application/json
+
+### GET: Bring the list of company members
+GET http://localhost:8080/employees
+Accept: application/json
+

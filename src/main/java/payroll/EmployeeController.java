@@ -23,8 +23,7 @@ class EmployeeController {
 
     @GetMapping("/employees")
     List<Employee> all() {
-
-        //something goes here
+        return repository.findAll();
     }
 
     @PostMapping("/employees")
@@ -38,7 +37,7 @@ class EmployeeController {
     Employee one(@PathVariable Long id) {
         //below line needs an update
         return repository.findById(id)
-                .orElseThrow(() -> new EmployeeNotFoundException());
+                .orElseThrow(() -> new EmployeeNotFoundException(id));
     }
 
     @PutMapping("/employees/{id}")
@@ -46,17 +45,20 @@ class EmployeeController {
 
         return repository.findById(id)
                 .map(employee -> {
-                    //something goes here
+                    employee.setName(newEmployee.getName());
+                    employee.setRole(newEmployee.getRole());
                     return repository.save(employee);
                 })
                 .orElseGet(() -> {
                     newEmployee.setId(id);
-                    // something goes here
+                    return repository.save(newEmployee);
                 });
     }
 
     @DeleteMapping("/employees/{id}")
     void deleteEmployee(@PathVariable Long id) {
-        //something goes here
+        repository.deleteById(id);
     }
+
+    //add new methods for salary handling
 }
